@@ -32,10 +32,9 @@
         methods:{
             addColor(){
                 const rgb = hexToRGB(this.newcolor);
-                const {red, gree, blue} = rgb;
+                const {red, green, blue} = rgb;
                 API.post("colors", {red, green, blue}).then(res=>{
-                    this.$dialog.alert('Color is successfully updated').then(function(dialog) {
-                    });
+                    console.log(res);
                 }).catch(err=>{
                     this.$dialog.error('Request completed!').then(function(dialog) {
                     });

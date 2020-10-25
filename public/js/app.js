@@ -2032,14 +2032,14 @@ __webpack_require__.r(__webpack_exports__);
 
       var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_1__["hexToRGB"])(this.newcolor);
       var red = rgb.red,
-          gree = rgb.gree,
+          green = rgb.green,
           blue = rgb.blue;
       _service_index__WEBPACK_IMPORTED_MODULE_1__["API"].post("colors", {
         red: red,
         green: green,
         blue: blue
       }).then(function (res) {
-        _this2.$dialog.alert('Color is successfully updated').then(function (dialog) {});
+        console.log(res);
       })["catch"](function (err) {
         _this2.$dialog.error('Request completed!').then(function (dialog) {});
       });

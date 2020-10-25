@@ -30,9 +30,9 @@ class ColorsController extends Controller
         $green = $request->input("green");
         $blue = $request->input("blue");
 
-        Colors::create(['red'=>$red, 'green'=>$green, 'blue'=>$blue]);
+        $res = Colors::create(['red'=>$red, 'green'=>$green, 'blue'=>$blue]);
 
-        $response = new Response(Response::HTTP_OK);
+        $response = new Response($res,Response::HTTP_OK);
         // Return HTTP response.
         return $response;
     }
