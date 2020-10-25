@@ -1,5 +1,5 @@
 <template>
-    <div class="container"> 
+    <div class="color-body"> 
         <input type='color' v-model='icolor'  @change="changeColor($event)" />
         
         <div  aria-label="Close" class="close" v-on:click='removeColor(color.id)'>
@@ -32,7 +32,7 @@ export default {
         changeColor(e){
             const rgb = hexToRGB(this.icolor);
             const {red, green, blue} = rgb;
-            API.post("colors/" + this.color.id, {red, green, blue} ).then(res=>{
+            API.put("colors/" + this.color.id, {red, green, blue} ).then(res=>{
                 
             }).catch(err=>{
                 this.$dialog.alert('Filed to update!').then(function(dialog) {
@@ -49,9 +49,10 @@ export default {
         height: 47px;
     }
 
-    .container{
+    .color-body{
         height:50px;
         display: flex;
+        margin-top:5px;
     }
 
     .close{

@@ -1948,7 +1948,7 @@ __webpack_require__.r(__webpack_exports__);
       var red = rgb.red,
           green = rgb.green,
           blue = rgb.blue;
-      _service_index__WEBPACK_IMPORTED_MODULE_0__["API"].post("colors/" + this.color.id, {
+      _service_index__WEBPACK_IMPORTED_MODULE_0__["API"].put("colors/" + this.color.id, {
         red: red,
         green: green,
         blue: blue
@@ -1972,9 +1972,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Color__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Color */ "./resources/js/components/Color.vue");
 /* harmony import */ var _service_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../service/index */ "./resources/js/service/index.js");
-//
-//
-//
 //
 //
 //
@@ -2012,20 +2009,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addColor: function addColor() {
-      var _this2 = this;
-
       var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_1__["hexToRGB"])(this.newcolor);
       var red = rgb.red,
           green = rgb.green,
           blue = rgb.blue;
+      var handler = this;
       _service_index__WEBPACK_IMPORTED_MODULE_1__["API"].post("colors", {
         red: red,
         green: green,
         blue: blue
       }).then(function (res) {
-        colors.push(res.data);
+        handler.colors.push(res.data);
       })["catch"](function (err) {
-        _this2.$dialog.error('Failed to add the color!').then(function (dialog) {});
+        handler.$dialog.error('Failed to add the color!').then(function (dialog) {});
       });
     },
     removeColor: function removeColor(id) {
@@ -6504,7 +6500,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\ninput[data-v-48693e88]{\n    width: 400px;\n    height: 47px;\n}\n.container[data-v-48693e88]{\n    height:50px;\n    display: flex;\n}\n.close[data-v-48693e88]{\n    height: 50px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    width: 40px;\n    cursor: pointer;\n    color: white;\n    font-size: 34px;\n    background: cornflowerblue;\n}\n", ""]);
+exports.push([module.i, "\ninput[data-v-48693e88]{\n    width: 400px;\n    height: 47px;\n}\n.color-body[data-v-48693e88]{\n    height:50px;\n    display: flex;\n    margin-top:5px;\n}\n.close[data-v-48693e88]{\n    height: 50px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    width: 40px;\n    cursor: pointer;\n    color: white;\n    font-size: 34px;\n    background: cornflowerblue;\n}\n", ""]);
 
 // exports
 
@@ -6523,7 +6519,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-6f2b98ca]{\n    background: grey;\n    height: 100vh;\n    text-align: center;\n    padding-top:50px;\n}\nh1[data-v-6f2b98ca]{\n    color:white;\n}\n.color_picker[data-v-6f2b98ca]{\n    background-color: yellow;\n    cursor: pointer;\n}\n.btn_add[data-v-6f2b98ca]{\n    background: blue;\n    color: white;\n    cursor:pointer;\n    width:70px;\n    height:50px\n}\n.color_header[data-v-6f2b98ca]{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\ninput[data-v-6f2b98ca]{\n    height:40px\n}\n.colors[data-v-6f2b98ca]{\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-6f2b98ca]{\n    background: grey;\n    height: calc(100vh - 70px );\n    text-align: center;\n    padding-top:50px;\n}\nh1[data-v-6f2b98ca]{\n    color:white;\n}\n.color_picker[data-v-6f2b98ca]{\n    background-color: yellow;\n    cursor: pointer;\n}\n.btn_add[data-v-6f2b98ca]{\n    background: blue;\n    color: white;\n    cursor:pointer;\n    width:70px;\n    height:50px\n}\n.color_header[data-v-6f2b98ca]{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\ninput[data-v-6f2b98ca]{\n    height:40px\n}\n.colors[data-v-6f2b98ca]{\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.colors_item[data-v-6f2b98ca]{\n    height:50px;\n    margin-top:5px\n}\n", ""]);
 
 // exports
 
@@ -38348,7 +38344,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "color-body" }, [
     _c("input", {
       directives: [
         {
@@ -38411,7 +38407,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h1", [_vm._v("Pick a Color " + _vm._s(_vm.newcolor))]),
+    _c("h1", [_vm._v("Pick a Color ")]),
     _vm._v(" "),
     _c("div", { staticClass: "color_header" }, [
       _c("input", {
@@ -38445,18 +38441,12 @@ var render = function() {
       "div",
       { staticClass: "colors" },
       _vm._l(_vm.colors, function(color) {
-        return _c(
-          "div",
-          { key: color.id },
-          [
-            _c("Color", {
-              attrs: { color: color, removeColor: _vm.removeColor }
-            })
-          ],
-          1
-        )
+        return _c("Color", {
+          key: color.id,
+          attrs: { color: color, removeColor: _vm.removeColor }
+        })
       }),
-      0
+      1
     )
   ])
 }
