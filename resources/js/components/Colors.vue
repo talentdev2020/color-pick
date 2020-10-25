@@ -7,7 +7,7 @@
         </div>
         <div class="colors">
             <div v-for="color in colors" :key="color.id">
-                <Color :color="color"/>
+                <Color :color="color" :removeColor = "removeColor" />
             </div>
             
         </div>
@@ -33,11 +33,25 @@
             addColor(){
                 const rgb = hexToRGB(this.newcolor);
                 const {red, green, blue} = rgb;
+
                 API.post("colors", {red, green, blue}).then(res=>{
-                    console.log(res);
+                    colors.push(res.data)
                 }).catch(err=>{
-                    this.$dialog.error('Request completed!').then(function(dialog) {
+                    this.$dialog.error('Failed to add the color!').then(function(dialog) {
                     });
+                })
+            },
+            removeColor(id){
+                const handler = this;
+                this.$dialog
+                .confirm('Please confirm to continue')
+                .then(function(dialog) {
+                    API.delete("colors/" + id ).then(res=>{
+                        handler.colors = handler.colors.filter(color=>color.id !==id);
+                    })
+                    .catch(err=>{
+                        handler.$dialog.alert('Filed to delete!').then(function(dialog) {});
+                    })
                 })
             }
         }

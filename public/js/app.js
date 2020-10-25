@@ -1930,11 +1930,8 @@ __webpack_require__.r(__webpack_exports__);
         return "";
       }
     },
-    id: {
-      type: String,
-      "default": function _default() {
-        return "";
-      }
+    removeColor: {
+      type: Function
     }
   },
   data: function data() {
@@ -1944,19 +1941,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {},
   methods: {
-    removeColor: function removeColor(e) {
-      this.$dialog.confirm('Please confirm to continue').then(function (dialog) {
-        var _this = this;
-
-        _service_index__WEBPACK_IMPORTED_MODULE_0__["API"]["delete"]("colors/" + this.color.id).then(function (res) {
-          _this.$dialog.alert('Color is successfully deleted').then(function (dialog) {});
-        })["catch"](function (err) {
-          _this.$dialog.alert('Filed to delete!').then(function (dialog) {});
-        });
-      });
-    },
     changeColor: function changeColor(e) {
-      var _this2 = this;
+      var _this = this;
 
       var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_0__["hexToRGB"])(this.icolor);
       var red = rgb.red,
@@ -1966,10 +1952,8 @@ __webpack_require__.r(__webpack_exports__);
         red: red,
         green: green,
         blue: blue
-      }).then(function (res) {
-        _this2.$dialog.alert('Color is successfully updated').then(function (dialog) {});
-      })["catch"](function (err) {
-        _this2.$dialog.alert('Filed to update!').then(function (dialog) {});
+      }).then(function (res) {})["catch"](function (err) {
+        _this.$dialog.alert('Filed to update!').then(function (dialog) {});
       });
     }
   }
@@ -2039,9 +2023,21 @@ __webpack_require__.r(__webpack_exports__);
         green: green,
         blue: blue
       }).then(function (res) {
-        console.log(res);
+        colors.push(res.data);
       })["catch"](function (err) {
-        _this2.$dialog.error('Request completed!').then(function (dialog) {});
+        _this2.$dialog.error('Failed to add the color!').then(function (dialog) {});
+      });
+    },
+    removeColor: function removeColor(id) {
+      var handler = this;
+      this.$dialog.confirm('Please confirm to continue').then(function (dialog) {
+        _service_index__WEBPACK_IMPORTED_MODULE_1__["API"]["delete"]("colors/" + id).then(function (res) {
+          handler.colors = handler.colors.filter(function (color) {
+            return color.id !== id;
+          });
+        })["catch"](function (err) {
+          handler.$dialog.alert('Filed to delete!').then(function (dialog) {});
+        });
       });
     }
   }
@@ -38382,7 +38378,11 @@ var render = function() {
       {
         staticClass: "close",
         attrs: { "aria-label": "Close" },
-        on: { click: _vm.removeColor }
+        on: {
+          click: function($event) {
+            return _vm.removeColor(_vm.color.id)
+          }
+        }
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
@@ -38448,7 +38448,11 @@ var render = function() {
         return _c(
           "div",
           { key: color.id },
-          [_c("Color", { attrs: { color: color } })],
+          [
+            _c("Color", {
+              attrs: { color: color, removeColor: _vm.removeColor }
+            })
+          ],
           1
         )
       }),
