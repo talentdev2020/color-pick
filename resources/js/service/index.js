@@ -1,4 +1,5 @@
-import { apiUrl } from './config/index'
+import { apiUrl } from '../config/index'
+import axios from 'axios'
 
 export const API = axios.create({
     baseURL: apiUrl,

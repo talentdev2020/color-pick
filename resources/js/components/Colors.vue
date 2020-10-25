@@ -3,7 +3,7 @@
          <h1>Pick a Color {{color}}</h1>
         <div class ='color_header'>
             <input class='color_picker' type="color" name="color" v-model="color" >
-            <button class='btn_add' >Add</button>
+            <button class='btn_add' v-on:click ='addColor'>Add</button>
         </div>
         <div class="colors">
             <Color color="#ff0000"/>
@@ -13,6 +13,8 @@
 
 <script>
     import Color from "./Color";
+    import {API} from "../service/index";
+    import {hexToRGB} from "../service/index";
 
     export default {
         components: { Color },
@@ -21,6 +23,18 @@
         },
         mounted() {
             console.log('Component mounted.')
+        },
+        methods:{
+            addColor(){
+                const rgb = hexToRGB(this.color);
+                console.log(rgb);
+                try{
+                    API.post("colors", {red:rgb.r, green:rgb.g, blue:rgb.b});
+                }catch(e){
+                    console.log(e)
+                }
+                
+            }
         }
     }
 </script>

@@ -1967,6 +1967,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Color__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Color */ "./resources/js/components/Color.vue");
+/* harmony import */ var _service_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../service/index */ "./resources/js/service/index.js");
 //
 //
 //
@@ -1981,6 +1982,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Color: _Color__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -1992,6 +1995,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  methods: {
+    addColor: function addColor() {
+      var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_1__["hexToRGB"])(this.color);
+      console.log(rgb);
+
+      try {
+        _service_index__WEBPACK_IMPORTED_MODULE_1__["API"].post("colors", {
+          red: rgb.r,
+          green: rgb.g,
+          blue: rgb.b
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 });
 
@@ -38384,7 +38403,9 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("button", { staticClass: "btn_add" }, [_vm._v("Add")])
+      _c("button", { staticClass: "btn_add", on: { click: _vm.addColor } }, [
+        _vm._v("Add")
+      ])
     ]),
     _vm._v(" "),
     _c(
@@ -50892,6 +50913,20 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/config/index.js":
+/*!**************************************!*\
+  !*** ./resources/js/config/index.js ***!
+  \**************************************/
+/*! exports provided: apiUrl */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiUrl", function() { return apiUrl; });
+var apiUrl = '/api/';
+
+/***/ }),
+
 /***/ "./resources/js/service/index.js":
 /*!***************************************!*\
   !*** ./resources/js/service/index.js ***!
@@ -50904,10 +50939,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API", function() { return API; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rgbToHex", function() { return rgbToHex; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hexToRGB", function() { return hexToRGB; });
-!(function webpackMissingModule() { var e = new Error("Cannot find module './config/index'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _config_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config/index */ "./resources/js/config/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
-var API = axios.create({
-  baseURL: !(function webpackMissingModule() { var e = new Error("Cannot find module './config/index'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())
+
+var API = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
+  baseURL: _config_index__WEBPACK_IMPORTED_MODULE_0__["apiUrl"]
 });
 
 function componentToHex(c) {
