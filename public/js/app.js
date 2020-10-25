@@ -1946,13 +1946,17 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     removeColor: function removeColor(e) {
       this.$dialog.confirm('Please confirm to continue').then(function (dialog) {
-        console.log('Clicked on proceed');
-      })["catch"](function () {
-        console.log('Clicked on cancel');
+        var _this = this;
+
+        _service_index__WEBPACK_IMPORTED_MODULE_0__["API"]["delete"]("colors/" + this.color.id).then(function (res) {
+          _this.$dialog.alert('Color is successfully deleted').then(function (dialog) {});
+        })["catch"](function (err) {
+          _this.$dialog.alert('Filed to delete!').then(function (dialog) {});
+        });
       });
     },
     changeColor: function changeColor(e) {
-      var _this = this;
+      var _this2 = this;
 
       var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_0__["hexToRGB"])(this.icolor);
       var red = rgb.red,
@@ -1963,9 +1967,9 @@ __webpack_require__.r(__webpack_exports__);
         green: green,
         blue: blue
       }).then(function (res) {
-        _this.$dialog.alert('Color is successfully updated').then(function (dialog) {});
+        _this2.$dialog.alert('Color is successfully updated').then(function (dialog) {});
       })["catch"](function (err) {
-        _this.$dialog.alert('Filed to update!').then(function (dialog) {});
+        _this2.$dialog.alert('Filed to update!').then(function (dialog) {});
       });
     }
   }

@@ -38,11 +38,15 @@ export default {
             this.$dialog
                 .confirm('Please confirm to continue')
                 .then(function(dialog) {
-                    console.log('Clicked on proceed');
+                    API.delete("colors/" + this.color.id ).then(res=>{
+                        this.$dialog.alert('Color is successfully deleted').then(function(dialog) {         
+                        });
+                    }).catch(err=>{
+                        this.$dialog.alert('Filed to delete!').then(function(dialog) {
+                        });
+                    })
                 })
-                .catch(function() {
-                    console.log('Clicked on cancel');
-                });
+                 
         },
         changeColor(e){
             const rgb = hexToRGB(this.icolor);
