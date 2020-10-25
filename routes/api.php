@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/colors', 'API\ColorsController@index');
+Route::post('/colors', 'API\ColorsController@store');
+Route::put('/colors/{id}', 'API\ColorsController@update');
+Route::delete('/colors/{id}', 'API\ColorsController@destroy');
+

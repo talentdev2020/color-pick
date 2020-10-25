@@ -5,13 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Color Saver</title>
+        
     </head>
     <body>
-        <h1>Pick a Color</h1>
-        <form action="#TODO" method="POST">
-            <input type="color" name="color" value="#30AF30">
-            <button>Add</button>
-        </form>
+       
+        <div id='app'></div>
         {{-- Put the listing here --}}
     </body>
+    <script src='js/app.js'></script>
 </html>
