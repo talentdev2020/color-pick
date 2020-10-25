@@ -11,6 +11,7 @@
 <script>
 import {API} from "../service/index";
 import {rgbToHex} from "../service/index"
+import {hexToRGB} from "../service/index"
 
 export default {
     props:{
@@ -44,9 +45,15 @@ export default {
                 });
         },
         changeColor(e){
-            const rgb = hexToRGB(this.newcolor);
-            const {red, gree, blue} = rgb;
-            API.post("colors/" + this.color.id, {red, green, blue} )
+            const rgb = hexToRGB(this.icolor);
+            const {red, green, blue} = rgb;
+            API.post("colors/" + this.color.id, {red, green, blue} ).then(res=>{
+                this.$dialog.alert('Color is successfully updated').then(function(dialog) {         
+                });
+            }).catch(err=>{
+                this.$dialog.alert('Filed to update!').then(function(dialog) {
+                });
+            })
         }
     }
     

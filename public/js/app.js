@@ -1921,6 +1921,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     color: {
@@ -1951,14 +1952,20 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     changeColor: function changeColor(e) {
-      var rgb = hexToRGB(this.newcolor);
+      var _this = this;
+
+      var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_0__["hexToRGB"])(this.icolor);
       var red = rgb.red,
-          gree = rgb.gree,
+          green = rgb.green,
           blue = rgb.blue;
       _service_index__WEBPACK_IMPORTED_MODULE_0__["API"].post("colors/" + this.color.id, {
         red: red,
         green: green,
         blue: blue
+      }).then(function (res) {
+        _this.$dialog.alert('Color is successfully updated').then(function (dialog) {});
+      })["catch"](function (err) {
+        _this.$dialog.alert('Filed to update!').then(function (dialog) {});
       });
     }
   }
@@ -2017,20 +2024,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addColor: function addColor() {
+      var _this2 = this;
+
       var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_1__["hexToRGB"])(this.newcolor);
       var red = rgb.red,
           gree = rgb.gree,
           blue = rgb.blue;
-
-      try {
-        _service_index__WEBPACK_IMPORTED_MODULE_1__["API"].post("colors", {
-          red: red,
-          green: green,
-          blue: blue
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      _service_index__WEBPACK_IMPORTED_MODULE_1__["API"].post("colors", {
+        red: red,
+        green: green,
+        blue: blue
+      }).then(function (res) {
+        _this2.$dialog.alert('Color is successfully updated').then(function (dialog) {});
+      })["catch"](function (err) {
+        _this2.$dialog.error('Request completed!').then(function (dialog) {});
+      });
     }
   }
 });
