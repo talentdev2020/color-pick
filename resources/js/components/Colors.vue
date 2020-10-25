@@ -1,12 +1,15 @@
 <template>
     <div class="container">
-         <h1>Pick a Color {{color}}</h1>
+         <h1>Pick a Color {{newcolor}}</h1>
         <div class ='color_header'>
-            <input class='color_picker' type="color" name="color" v-model="color" >
+            <input class='color_picker' type="color" name="color" v-model="newcolor" >
             <button class='btn_add' v-on:click ='addColor'>Add</button>
         </div>
         <div class="colors">
-            <Color color="#ff0000"/>
+            <div v-for="color in colors" :key="color.id">
+                <Color :color="color"/>
+            </div>
+            
         </div>
     </div>
 </template>
@@ -19,17 +22,19 @@
     export default {
         components: { Color },
         data(){
-            return {color:"#ffff00"}
+            return {newcolor:"#ffff00", colors:[]}
         },
         mounted() {
-            console.log('Component mounted.')
+            API.get("colors").then(res=>{
+                 this.colors = res.data;
+            }).catch(err=>console.log(err))
         },
         methods:{
             addColor(){
-                const rgb = hexToRGB(this.color);
-                console.log(rgb);
-                try{
-                    API.post("colors", {red:rgb.r, green:rgb.g, blue:rgb.b});
+                const rgb = hexToRGB(this.newcolor);
+                const {red, gree, blue} = rgb;
+                 try{
+                    API.post("colors", {red, green, blue});
                 }catch(e){
                     console.log(e)
                 }

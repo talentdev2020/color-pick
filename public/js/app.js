@@ -1920,10 +1920,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     color: {
-      type: String,
+      type: Object,
       "default": function _default() {
         return "";
       }
@@ -1937,12 +1938,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      icolor: this.color
+      icolor: Object(_service_index__WEBPACK_IMPORTED_MODULE_0__["rgbToHex"])(this.color)
     };
   },
-  mounted: function mounted() {
-    console.log(this.color);
-  },
+  mounted: function mounted() {},
   methods: {
     removeColor: function removeColor(e) {
       this.$dialog.confirm('Please confirm to continue').then(function (dialog) {
@@ -1951,7 +1950,17 @@ __webpack_require__.r(__webpack_exports__);
         console.log('Clicked on cancel');
       });
     },
-    changeColor: function changeColor(e) {}
+    changeColor: function changeColor(e) {
+      var rgb = hexToRGB(this.newcolor);
+      var red = rgb.red,
+          gree = rgb.gree,
+          blue = rgb.blue;
+      _service_index__WEBPACK_IMPORTED_MODULE_0__["API"].post("colors/" + this.color.id, {
+        red: red,
+        green: green,
+        blue: blue
+      });
+    }
   }
 });
 
@@ -1981,6 +1990,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -1990,22 +2002,31 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      color: "#ffff00"
+      newcolor: "#ffff00",
+      colors: []
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    var _this = this;
+
+    _service_index__WEBPACK_IMPORTED_MODULE_1__["API"].get("colors").then(function (res) {
+      _this.colors = res.data;
+    })["catch"](function (err) {
+      return console.log(err);
+    });
   },
   methods: {
     addColor: function addColor() {
-      var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_1__["hexToRGB"])(this.color);
-      console.log(rgb);
+      var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_1__["hexToRGB"])(this.newcolor);
+      var red = rgb.red,
+          gree = rgb.gree,
+          blue = rgb.blue;
 
       try {
         _service_index__WEBPACK_IMPORTED_MODULE_1__["API"].post("colors", {
-          red: rgb.r,
-          green: rgb.g,
-          blue: rgb.b
+          red: red,
+          green: green,
+          blue: blue
         });
       } catch (e) {
         console.log(e);
@@ -38378,7 +38399,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h1", [_vm._v("Pick a Color " + _vm._s(_vm.color))]),
+    _c("h1", [_vm._v("Pick a Color " + _vm._s(_vm.newcolor))]),
     _vm._v(" "),
     _c("div", { staticClass: "color_header" }, [
       _c("input", {
@@ -38386,19 +38407,19 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.color,
-            expression: "color"
+            value: _vm.newcolor,
+            expression: "newcolor"
           }
         ],
         staticClass: "color_picker",
         attrs: { type: "color", name: "color" },
-        domProps: { value: _vm.color },
+        domProps: { value: _vm.newcolor },
         on: {
           input: function($event) {
             if ($event.target.composing) {
               return
             }
-            _vm.color = $event.target.value
+            _vm.newcolor = $event.target.value
           }
         }
       }),
@@ -38411,8 +38432,15 @@ var render = function() {
     _c(
       "div",
       { staticClass: "colors" },
-      [_c("Color", { attrs: { color: "#ff0000" } })],
-      1
+      _vm._l(_vm.colors, function(color) {
+        return _c(
+          "div",
+          { key: color.id },
+          [_c("Color", { attrs: { color: color } })],
+          1
+        )
+      }),
+      0
     )
   ])
 }
@@ -50661,6 +50689,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
  // only needed in custom components
+// import store from "./store/index"; 
 // include the default style
 
  // Tell Vue to install the plugin.
@@ -50687,6 +50716,7 @@ window.Vue.use(vuejs_dialog__WEBPACK_IMPORTED_MODULE_1___default.a);
 
 var app = new Vue({
   el: '#app',
+  // store: store,
   render: function render(h) {
     return h(_components_Colors_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
   }
@@ -50953,15 +50983,18 @@ function componentToHex(c) {
   return hex.length == 1 ? "0" + hex : hex;
 }
 
-var rgbToHex = function rgbToHex(r, g, b) {
-  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+var rgbToHex = function rgbToHex(rgb) {
+  var red = rgb.red,
+      green = rgb.green,
+      blue = rgb.blue;
+  return "#" + componentToHex(red) + componentToHex(green) + componentToHex(blue);
 };
 var hexToRGB = function hexToRGB(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
+    red: parseInt(result[1], 16),
+    green: parseInt(result[2], 16),
+    blue: parseInt(result[3], 16)
   } : null;
 };
 

@@ -10,11 +10,12 @@
 
 <script>
 import {API} from "../service/index";
+import {rgbToHex} from "../service/index"
 
 export default {
     props:{
         color:{
-            type:String,
+            type:Object,
             default(){
                 return ""
             }
@@ -27,11 +28,10 @@ export default {
         }
     },
     data(){
-        return {icolor:this.color}
+        return {icolor:rgbToHex(this.color)}
     },
     mounted(){
-        console.log(this.color)
-    },
+     },
     methods:{
         removeColor(e){
             this.$dialog
@@ -44,7 +44,9 @@ export default {
                 });
         },
         changeColor(e){
-          
+            const rgb = hexToRGB(this.newcolor);
+            const {red, gree, blue} = rgb;
+            API.post("colors/" + this.color.id, {red, green, blue} )
         }
     }
     

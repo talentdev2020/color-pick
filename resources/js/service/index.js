@@ -10,15 +10,17 @@ function componentToHex(c) {
     return hex.length == 1 ? "0" + hex : hex;
   }
   
-export const rgbToHex = (r,g,b) =>{
-   return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+export const rgbToHex = (rgb) =>{
+    const {red,green,blue} = rgb;
+    
+   return "#" + componentToHex(red) + componentToHex(green) + componentToHex(blue);
 }
 
 export const hexToRGB = (hex) =>{
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
+    red: parseInt(result[1], 16),
+    green: parseInt(result[2], 16),
+    blue: parseInt(result[3], 16)
   } : null;
 }

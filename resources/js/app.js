@@ -7,7 +7,7 @@ import Colors from './components/Colors.vue';
 
 import VuejsDialog from 'vuejs-dialog';
 import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js'; // only needed in custom components
- 
+// import store from "./store/index"; 
 // include the default style
 import 'vuejs-dialog/dist/vuejs-dialog.min.css';
  
@@ -37,5 +37,6 @@ window.Vue.use(VuejsDialog);
 
 const app = new Vue({
     el: '#app',
+    // store: store,
     render: h => h(Colors)
 });

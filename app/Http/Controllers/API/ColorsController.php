@@ -11,7 +11,7 @@ class ColorsController extends Controller
 {
     public function index() : Response
     {
-        $colrs = Colors::all();
+        $colors = Colors::all();
 
         $response = new Response($colors, Response::HTTP_OK);
 
