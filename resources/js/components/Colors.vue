@@ -33,6 +33,8 @@ export default {
     mounted() {
         API.get("colors")
             .then(res => {
+                  console.log(res.data.data)
+
                 this.colors = res.data.data;
             })
             .catch(err => console.log(err));
@@ -57,7 +59,7 @@ export default {
             this.$dialog
                 .confirm("Please confirm to continue")
                 .then(function(dialog) {
-                    API.delete("colors/" + id)
+                    API.delete(`colors/${id}` )
                         .then(res => {
                             handler.colors = handler.colors.filter(
                                 color => color.id !== id

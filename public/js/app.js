@@ -1919,10 +1919,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -1948,7 +1944,7 @@ __webpack_require__.r(__webpack_exports__);
       _service_index__WEBPACK_IMPORTED_MODULE_0__["API"].put("colors/" + this.color.id, {
         color: this.icolor
       }).then(function (res) {})["catch"](function (err) {
-        handler.$dialog.alert("Filed to update!").then(function (dialog) {});
+        handler.$dialog.alert('Filed to update!').then(function (dialog) {});
       });
     }
   }
@@ -2006,6 +2002,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     _service_index__WEBPACK_IMPORTED_MODULE_1__["API"].get("colors").then(function (res) {
+      console.log(res.data.data);
       _this.colors = res.data.data;
     })["catch"](function (err) {
       return console.log(err);
@@ -2025,7 +2022,7 @@ __webpack_require__.r(__webpack_exports__);
     removeColor: function removeColor(id) {
       var handler = this;
       this.$dialog.confirm("Please confirm to continue").then(function (dialog) {
-        _service_index__WEBPACK_IMPORTED_MODULE_1__["API"]["delete"]("colors/" + id).then(function (res) {
+        _service_index__WEBPACK_IMPORTED_MODULE_1__["API"]["delete"]("colors/".concat(id)).then(function (res) {
           handler.colors = handler.colors.filter(function (color) {
             return color.id !== id;
           });
@@ -6498,7 +6495,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\ninput[data-v-48693e88] {\r\n    width: 400px;\r\n    height: 47px;\n}\n.color-body[data-v-48693e88] {\r\n    height: 50px;\r\n    display: flex;\r\n    margin-top: 5px;\n}\n.close[data-v-48693e88] {\r\n    height: 50px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 40px;\r\n    cursor: pointer;\r\n    color: white;\r\n    font-size: 34px;\r\n    background: cornflowerblue;\n}\r\n", ""]);
+exports.push([module.i, "\ninput[data-v-48693e88]{\n    width: 400px;\n    height: 47px;\n}\n.color-body[data-v-48693e88]{\n    height:50px;\n    display: flex;\n    margin-top:5px;\n}\n.close[data-v-48693e88]{\n    height: 50px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    width: 40px;\n    cursor: pointer;\n    color: white;\n    font-size: 34px;\n    background: cornflowerblue;\n}\n", ""]);
 
 // exports
 
