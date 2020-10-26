@@ -1919,8 +1919,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -1936,24 +1938,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      icolor: Object(_service_index__WEBPACK_IMPORTED_MODULE_0__["rgbToHex"])(this.color)
+      icolor: this.color.color
     };
   },
   mounted: function mounted() {},
   methods: {
     changeColor: function changeColor(e) {
-      var _this = this;
-
-      var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_0__["hexToRGB"])(this.icolor);
-      var red = rgb.red,
-          green = rgb.green,
-          blue = rgb.blue;
+      var handler = this;
       _service_index__WEBPACK_IMPORTED_MODULE_0__["API"].put("colors/" + this.color.id, {
-        red: red,
-        green: green,
-        blue: blue
+        color: this.icolor
       }).then(function (res) {})["catch"](function (err) {
-        _this.$dialog.alert('Filed to update!').then(function (dialog) {});
+        handler.$dialog.alert("Filed to update!").then(function (dialog) {});
       });
     }
   }
@@ -1985,8 +1980,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-
+ // import {hexToRGB} from "../service/index";
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2002,37 +2006,31 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     _service_index__WEBPACK_IMPORTED_MODULE_1__["API"].get("colors").then(function (res) {
-      _this.colors = res.data;
+      _this.colors = res.data.data;
     })["catch"](function (err) {
       return console.log(err);
     });
   },
   methods: {
     addColor: function addColor() {
-      var rgb = Object(_service_index__WEBPACK_IMPORTED_MODULE_1__["hexToRGB"])(this.newcolor);
-      var red = rgb.red,
-          green = rgb.green,
-          blue = rgb.blue;
       var handler = this;
       _service_index__WEBPACK_IMPORTED_MODULE_1__["API"].post("colors", {
-        red: red,
-        green: green,
-        blue: blue
+        color: this.newcolor
       }).then(function (res) {
         handler.colors.push(res.data);
       })["catch"](function (err) {
-        handler.$dialog.error('Failed to add the color!').then(function (dialog) {});
+        handler.$dialog.alert("Failed to add the color!").then(function (dialog) {});
       });
     },
     removeColor: function removeColor(id) {
       var handler = this;
-      this.$dialog.confirm('Please confirm to continue').then(function (dialog) {
+      this.$dialog.confirm("Please confirm to continue").then(function (dialog) {
         _service_index__WEBPACK_IMPORTED_MODULE_1__["API"]["delete"]("colors/" + id).then(function (res) {
           handler.colors = handler.colors.filter(function (color) {
             return color.id !== id;
           });
         })["catch"](function (err) {
-          handler.$dialog.alert('Filed to delete!').then(function (dialog) {});
+          handler.$dialog.alert("Filed to delete!").then(function (dialog) {});
         });
       });
     }
@@ -6500,7 +6498,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\ninput[data-v-48693e88]{\n    width: 400px;\n    height: 47px;\n}\n.color-body[data-v-48693e88]{\n    height:50px;\n    display: flex;\n    margin-top:5px;\n}\n.close[data-v-48693e88]{\n    height: 50px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    width: 40px;\n    cursor: pointer;\n    color: white;\n    font-size: 34px;\n    background: cornflowerblue;\n}\n", ""]);
+exports.push([module.i, "\ninput[data-v-48693e88] {\r\n    width: 400px;\r\n    height: 47px;\n}\n.color-body[data-v-48693e88] {\r\n    height: 50px;\r\n    display: flex;\r\n    margin-top: 5px;\n}\n.close[data-v-48693e88] {\r\n    height: 50px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 40px;\r\n    cursor: pointer;\r\n    color: white;\r\n    font-size: 34px;\r\n    background: cornflowerblue;\n}\r\n", ""]);
 
 // exports
 
@@ -6519,7 +6517,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-6f2b98ca]{\n    background: grey;\n    height: calc(100vh - 70px );\n    text-align: center;\n    padding-top:50px;\n}\nh1[data-v-6f2b98ca]{\n    color:white;\n}\n.color_picker[data-v-6f2b98ca]{\n    background-color: yellow;\n    cursor: pointer;\n}\n.btn_add[data-v-6f2b98ca]{\n    background: blue;\n    color: white;\n    cursor:pointer;\n    width:70px;\n    height:50px\n}\n.color_header[data-v-6f2b98ca]{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\ninput[data-v-6f2b98ca]{\n    height:40px\n}\n.colors[data-v-6f2b98ca]{\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.colors_item[data-v-6f2b98ca]{\n    height:50px;\n    margin-top:5px\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-6f2b98ca] {\n    background: grey;\n    height: calc(100vh - 70px);\n    text-align: center;\n    padding-top: 50px;\n}\nh1[data-v-6f2b98ca] {\n    color: white;\n}\n.btn_add[data-v-6f2b98ca] {\n    background: blue;\n    color: white;\n    cursor: pointer;\n    font-weight: 500;\n    width: 90px;\n    height: 50px;\n}\n.color_header[data-v-6f2b98ca] {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\ninput[type=\"color\"][data-v-6f2b98ca] {\n\t-webkit-appearance: none;\n \twidth: 42px;\n     background: transparent;\n \theight: 46px;\n    cursor: pointer;\n}\ninput[type=\"color\"][data-v-6f2b98ca]::-webkit-color-swatch-wrapper {\n\tpadding: 0;\n}\ninput[type=\"color\"][data-v-6f2b98ca]::-webkit-color-swatch {\n\tborder: none;\n}\n.colors[data-v-6f2b98ca] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.colors_item[data-v-6f2b98ca] {\n    height: 50px;\n    margin-top: 5px;\n}\n", ""]);
 
 // exports
 
@@ -38407,7 +38405,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h1", [_vm._v("Pick a Color ")]),
+    _c("h1", [_vm._v("Pick a Color")]),
     _vm._v(" "),
     _c("div", { staticClass: "color_header" }, [
       _c("input", {
@@ -38419,7 +38417,6 @@ var render = function() {
             expression: "newcolor"
           }
         ],
-        staticClass: "color_picker",
         attrs: { type: "color", name: "color" },
         domProps: { value: _vm.newcolor },
         on: {
@@ -50745,8 +50742,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 try {
-  window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
-  window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+  window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"]; // window.$ = window.jQuery = require("jquery");
 
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 } catch (e) {}
@@ -50755,10 +50751,9 @@ try {
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
+// window.axios = require('axios');
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -50967,13 +50962,12 @@ var apiUrl = '/api/';
 /*!***************************************!*\
   !*** ./resources/js/service/index.js ***!
   \***************************************/
-/*! exports provided: API, rgbToHex, hexToRGB */
+/*! exports provided: API, hexToRGB */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API", function() { return API; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rgbToHex", function() { return rgbToHex; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hexToRGB", function() { return hexToRGB; });
 /* harmony import */ var _config_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config/index */ "./resources/js/config/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -50982,19 +50976,15 @@ __webpack_require__.r(__webpack_exports__);
 
 var API = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
   baseURL: _config_index__WEBPACK_IMPORTED_MODULE_0__["apiUrl"]
-});
+}); // function componentToHex(c) {
+//     var hex = c.toString(16);
+//     return hex.length == 1 ? "0" + hex : hex;
+//   }
+// export const rgbToHex = (rgb) =>{
+//     const {red,green,blue} = rgb;
+//    return "#" + componentToHex(red) + componentToHex(green) + componentToHex(blue);
+// }
 
-function componentToHex(c) {
-  var hex = c.toString(16);
-  return hex.length == 1 ? "0" + hex : hex;
-}
-
-var rgbToHex = function rgbToHex(rgb) {
-  var red = rgb.red,
-      green = rgb.green,
-      blue = rgb.blue;
-  return "#" + componentToHex(red) + componentToHex(green) + componentToHex(blue);
-};
 var hexToRGB = function hexToRGB(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
@@ -51024,8 +51014,8 @@ var hexToRGB = function hexToRGB(hex) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Temp\color-picker-test\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\Temp\color-picker-test\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\temp\color-picker-test\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\temp\color-picker-test\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

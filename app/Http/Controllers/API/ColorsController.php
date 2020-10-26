@@ -6,18 +6,41 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Colors;
-
+use League\Fractal\Resource\Collection;
+use App\Transformers\ColorsTransformer;
+use League\Fractal\Manager;
 class ColorsController extends Controller
 {
+    private $fractal;
+
+    private $colorTransformer;
+    
+    function __construct(Manager $fractal, ColorsTransformer $colorTransformer)
+    {
+        $this->fractal = $fractal;
+        $this->colorTransformer = $colorTransformer;
+    }
+
     public function index() : Response
     {
         $colors = Colors::all();
 
-        $response = new Response($colors, Response::HTTP_OK);
+        $colors = new Collection($colors, $this->colorTransformer);
+        $colors = $this->fractal->createData($colors);
 
-        return $response;
+        $response = new Response($colors->toArray(), Response::HTTP_OK);
+
+         return $response;
+        
     }
 
+    function hexToRGB($hex)
+    {
+       list($red, $green, $blue) = sscanf($hex, "#%02x%02x%02x");
+       return ['red'=>$red, 'green'=>$green, 'blue'=>$blue];
+    }
+
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -26,14 +49,10 @@ class ColorsController extends Controller
      */
     public function store(Request $request) : Response
     {
-        $red = $request->input("red");
-        $green = $request->input("green");
-        $blue = $request->input("blue");
-
-        $res = Colors::create(['red'=>$red, 'green'=>$green, 'blue'=>$blue]);
-
-        $response = new Response($res,Response::HTTP_OK);
-        // Return HTTP response.
+        $color = $request->input("color");
+        $res = Colors::create($this->hexToRGB($color));
+        $response = new Response(["id"=>$res->id, "color"=>$color], Response::HTTP_OK);
+           // Return HTTP response.
         return $response;
     }
 
@@ -46,11 +65,9 @@ class ColorsController extends Controller
      */
     public function update(Request $request, $id) : Response
     {
-        $red = $request->input("red");
-        $green = $request->input("green");
-        $blue = $request->input("blue");
+        $color = $request->input("color");
 
-        $row = Colors::where("id", $id)->update(['red'=>$red, 'green'=>$green, 'blue'=>$blue]);
+        $row = Colors::where("id", $id)->update($this->hexToRGB($color));
         
         $response = new Response(Response::HTTP_OK);
         // Return HTTP response.

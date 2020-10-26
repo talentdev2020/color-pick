@@ -6,6 +6,8 @@
 /.idea
 /database/database.sqlite
 .env
+composer.lock
+.gitignore
 .env.backup
 .phpunit.result.cache
 Homestead.json
